@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.chronos.R
@@ -51,6 +52,8 @@ fun ForgotPage(navController: NavHostController) {
 
   val passwordsMatch = newPassword == confirmNewPassword
   val allFieldsNotEmpty = email.isNotBlank() && newPassword.isNotBlank() && confirmNewPassword.isNotBlank()
+
+  var isPasswordValid by remember { mutableStateOf(false) }
 
   Column(
     modifier = Modifier
@@ -101,7 +104,10 @@ fun ForgotPage(navController: NavHostController) {
 
     TextField(
       value = newPassword,
-      onValueChange = { newPassword = it },
+      onValueChange = {
+        newPassword = it
+        isPasswordValid = it.length >= 8
+      },
       label = {
         Text(
           text = "NEW PASSWORD",
@@ -110,6 +116,7 @@ fun ForgotPage(navController: NavHostController) {
           )
         )
       },
+      visualTransformation = PasswordVisualTransformation(),
       textStyle = TextStyle.Default.copy(fontFamily = FontFamily(Font(R.font.oswald))),
       keyboardOptions = KeyboardOptions.Default.copy(
         keyboardType = KeyboardType.Text,
@@ -140,6 +147,7 @@ fun ForgotPage(navController: NavHostController) {
           )
         )
       },
+      visualTransformation = PasswordVisualTransformation(),
       textStyle = TextStyle.Default.copy(fontFamily = FontFamily(Font(R.font.oswald))),
       keyboardOptions = KeyboardOptions.Default.copy(
         keyboardType = KeyboardType.Text,
@@ -161,7 +169,7 @@ fun ForgotPage(navController: NavHostController) {
 
     Button(
       onClick = { Log.d("Click", "Confirm Reset") },
-      enabled = passwordsMatch && allFieldsNotEmpty,
+      enabled = passwordsMatch && allFieldsNotEmpty && isPasswordValid,
       modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 24.dp, vertical = 8.dp)
@@ -178,7 +186,6 @@ fun ForgotPage(navController: NavHostController) {
       onClick = { navController.navigate(NavRoutes.Login.route) },
       modifier = Modifier
         .align(Alignment.CenterHorizontally)
-        .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
       Text(
         text = "Back to Login",
@@ -193,7 +200,6 @@ fun ForgotPage(navController: NavHostController) {
       onClick = { Log.d("Click", "Contact Service") },
       modifier = Modifier
         .align(Alignment.CenterHorizontally)
-        .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
       Text(
         text = "Contact Service",

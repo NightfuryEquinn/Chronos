@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.chronos.R
 import com.example.chronos.ui.navigations.NavRoutes
+import com.example.chronos.validation.isValidEmail
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +54,9 @@ fun RegisterPage(navController: NavHostController) {
 
   val passwordsMatch = password == confirmPassword
   val allFieldsNotEmpty = username.isNotBlank() && email.isNotBlank() && confirmPassword.isNotBlank() && email.isNotBlank()
+
+  var isEmailValid by remember { mutableStateOf(false) }
+  var isPasswordValid by remember { mutableStateOf(false) }
 
   Column(
     modifier = Modifier
@@ -102,7 +106,10 @@ fun RegisterPage(navController: NavHostController) {
 
     TextField(
       value = password,
-      onValueChange = { password = it },
+      onValueChange = {
+        password = it
+        isPasswordValid = it.length >= 8
+      },
       label = {
         Text(
           text = "PASSWORD",
@@ -160,7 +167,10 @@ fun RegisterPage(navController: NavHostController) {
 
     TextField(
       value = email,
-      onValueChange = { email = it },
+      onValueChange = {
+        email = it
+        isEmailValid = it.isValidEmail()
+      },
       label = {
         Text(
           text = "EMAIL ADDRESS",
@@ -184,7 +194,7 @@ fun RegisterPage(navController: NavHostController) {
 
     Button(
       onClick = { Log.d("Click", "Register") },
-      enabled = passwordsMatch && allFieldsNotEmpty,
+      enabled = passwordsMatch && allFieldsNotEmpty && isEmailValid && isPasswordValid,
       modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 24.dp, vertical = 8.dp)
