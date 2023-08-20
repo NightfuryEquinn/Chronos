@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     setContent {
       ChronosTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-          LoginPage()
+          MainScreen()
         }
       }
     }
@@ -29,6 +29,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainPreview() {
   ChronosTheme {
-    LoginPage()
+    MainScreen()
   }
 }
