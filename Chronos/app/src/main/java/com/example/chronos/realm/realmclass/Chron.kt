@@ -10,10 +10,10 @@ import java.util.Date
 class Chron : RealmObject {
   @PrimaryKey
   var _chron_id : ObjectId = ObjectId()
-  var username : String = ""
-  var email : String = ""
-  var password : String = ""
+  var chronUsername : String = ""
+  var chronEmail : String = ""
+  var chronPassword : String = ""
 
   @SuppressLint("SimpleDateFormat")
-  var registerDate : String = SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" ).format( Date() )
+  var chronRegisterDate : String = SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" ).format( Date() )
 }

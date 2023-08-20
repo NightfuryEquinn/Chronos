@@ -7,10 +7,10 @@ import org.mongodb.kbson.ObjectId
 class Epheron : RealmObject {
   @PrimaryKey
   var _epheron_id : ObjectId = ObjectId()
-  var isComplete : Boolean = false
-  var startDate : String = ""
-  var endDate : String = ""
-  var duration : String = ""
-  var description : String = ""
+  var epheron_isComplete : Boolean = false
+  var epheron_startDate : String = ""
+  var epheron_endDate : String = ""
+  var epheron_duration : String = ""
+  var epheron_description : String = ""
   var chron_id : Chron? = null
 }

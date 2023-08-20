@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pages
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,21 +36,27 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.realm.realmclass.Chron
 import com.example.chronos.ui.navigations.NavRoutes
+import com.example.chronos.ui.viewmodels.RegisterVM
 import com.example.chronos.validation.isValidEmail
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterPage(navController: NavHostController) {
+fun RegisterPage(navController: NavHostController, registerVM: RegisterVM = viewModel()) {
+  // State variables
   var username by remember { mutableStateOf("") }
   var email by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
   var confirmPassword by remember { mutableStateOf("") }
 
+  // Access keyboard
   val keyboardController = LocalSoftwareKeyboardController.current
 
+  // Validations
   val passwordsMatch = password == confirmPassword
   val allFieldsNotEmpty = username.isNotBlank() && email.isNotBlank() && confirmPassword.isNotBlank() && email.isNotBlank()
 
@@ -193,7 +198,14 @@ fun RegisterPage(navController: NavHostController) {
     )
 
     Button(
-      onClick = { Log.d("Click", "Register") },
+      onClick = {
+        val newChron = Chron().apply {
+          chronUsername = username
+          chronEmail = email
+          chronPassword = password
+        }
+        registerVM.insertChron(newChron)
+      },
       enabled = passwordsMatch && allFieldsNotEmpty && isEmailValid && isPasswordValid,
       modifier = Modifier
         .fillMaxWidth()
