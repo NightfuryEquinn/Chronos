@@ -13,8 +13,8 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
   }
 
   // Filter through specific chron data
-  override fun filterData(name: String): List<Chron> {
-    TODO()
+  override fun filterData(email: String): List<Chron> {
+    return realm.query<Chron>("chronEmail = $0", email).find()
   }
 
   // Insert new chron data
@@ -25,8 +25,11 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
   }
 
   // Update existing chron data
-  override suspend fun updateChron(chron: Chron) {
-    TODO()
+  override suspend fun updateChron(email: String, password: String) {
+    realm.write {
+      val theChron = this.query<Chron>("chronEmail = $0", email).first().find()
+      theChron?.chronPassword = password
+    }
   }
 
   // Delete existing chron data

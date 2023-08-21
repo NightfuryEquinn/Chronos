@@ -11,6 +11,7 @@ class LoginVM: ViewModel() {
     val repo = CRUDoverwrite(Connection.connectDB())
     val chronData = repo.fetchData()
 
+    // Find the chron object username and password
     val isExistingChron = chronData.find { chron ->
       chron.chronUsername == username && chron.chronPassword == password
     }

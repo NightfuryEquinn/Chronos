@@ -6,9 +6,9 @@ import org.mongodb.kbson.ObjectId
 
 interface CRUDops {
   fun fetchData() : List<Chron>
-  fun filterData(name: String) : List<Chron>
+  fun filterData(email: String) : List<Chron>
 
   suspend fun insertChron(chron: Chron)
-  suspend fun updateChron(chron: Chron)
+  suspend fun updateChron(email: String, password: String)
   suspend fun deleteChron(id: ObjectId)
 }

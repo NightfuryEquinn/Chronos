@@ -37,13 +37,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.chronos.R
 import com.example.chronos.ui.navigations.NavRoutes
+import com.example.chronos.ui.viewmodels.ForgotVM
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ForgotPage(navController: NavHostController) {
+fun ForgotPage(navController: NavHostController, forgotVM: ForgotVM = viewModel()) {
   // State variables
   var email by remember { mutableStateOf("") }
   var newPassword by remember { mutableStateOf("") }
@@ -88,7 +90,7 @@ fun ForgotPage(navController: NavHostController) {
       },
       textStyle = TextStyle.Default.copy(fontFamily = FontFamily(Font(R.font.oswald))),
       keyboardOptions = KeyboardOptions.Default.copy(
-        keyboardType = KeyboardType.Text,
+        keyboardType = KeyboardType.Email,
         imeAction = ImeAction.Done
       ),
       keyboardActions = KeyboardActions(
@@ -172,9 +174,7 @@ fun ForgotPage(navController: NavHostController) {
 
     Button(
       onClick = {
-        Log.d("Chron", "Confirm Reset")
-
-        navController.navigate(NavRoutes.Login.route)
+        forgotVM.updateChron(email, newPassword, navController)
       },
       enabled = passwordsMatch && allFieldsNotEmpty && isPasswordValid,
       modifier = Modifier

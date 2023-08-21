@@ -204,9 +204,8 @@ fun RegisterPage(navController: NavHostController, registerVM: RegisterVM = view
           chronEmail = email
           chronPassword = password
         }
-        registerVM.insertChron(newChron)
 
-        navController.navigate(NavRoutes.Login.route)
+        registerVM.insertChron(newChron, navController)
       },
       enabled = passwordsMatch && allFieldsNotEmpty && isEmailValid && isPasswordValid,
       modifier = Modifier
