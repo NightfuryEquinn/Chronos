@@ -8,17 +8,17 @@ import androidx.compose.material.icons.filled.DateRange
 object NavBarItems {
   val BarItems = listOf(
     BarItem(
-      title = "Profile",
+      title = "PROFILE",
       image = Icons.Filled.AccountCircle,
       route = "Profile"
     ),
     BarItem(
-      title = "Create",
+      title = "CREATE",
       image = Icons.Filled.AddCircle,
       route = "Create"
     ),
     BarItem(
-      title = "Calendar",
+      title = "CALENDAR",
       image = Icons.Filled.DateRange,
       route = "Calendar"
     )
