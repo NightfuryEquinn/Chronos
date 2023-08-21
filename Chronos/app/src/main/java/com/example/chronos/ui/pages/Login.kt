@@ -37,21 +37,26 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.chronos.R
 import com.example.chronos.ui.navigations.NavRoutes
+import com.example.chronos.ui.viewmodels.LoginVM
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun LoginPage(navController: NavHostController) {
+fun LoginPage(navController: NavHostController, loginVM: LoginVM = viewModel()) {
+  // State variables
   var username by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
 
+  // Access keyboard
   val keyboardController = LocalSoftwareKeyboardController.current
 
+  // Validations
   val allFieldsNotEmpty = username.isNotBlank() && password.isNotBlank()
 
   Column(
@@ -128,7 +133,15 @@ fun LoginPage(navController: NavHostController) {
     )
 
     Button(
-      onClick = { Log.d("Click", "Login") },
+      onClick = {
+        if(loginVM.validateChron(username, password)) {
+          Log.d("Chron", "Success")
+        }
+        else
+        {
+          Log.d("Chron", "Fail")
+        }
+      },
       enabled = allFieldsNotEmpty,
       modifier = Modifier
         .fillMaxWidth()

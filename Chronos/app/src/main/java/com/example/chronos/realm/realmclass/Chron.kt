@@ -10,6 +10,7 @@ import java.util.Date
 class Chron : RealmObject {
   @PrimaryKey
   var _chron_id : ObjectId = ObjectId()
+
   var chronUsername : String = ""
   var chronEmail : String = ""
   var chronPassword : String = ""

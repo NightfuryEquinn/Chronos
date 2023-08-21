@@ -44,12 +44,15 @@ import com.example.chronos.ui.navigations.NavRoutes
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ForgotPage(navController: NavHostController) {
+  // State variables
   var email by remember { mutableStateOf("") }
   var newPassword by remember { mutableStateOf("") }
   var confirmNewPassword by remember { mutableStateOf("") }
 
+  // Access keyboard
   val keyboardController = LocalSoftwareKeyboardController.current
 
+  // Validations
   val passwordsMatch = newPassword == confirmNewPassword
   val allFieldsNotEmpty = email.isNotBlank() && newPassword.isNotBlank() && confirmNewPassword.isNotBlank()
 
@@ -168,7 +171,11 @@ fun ForgotPage(navController: NavHostController) {
     )
 
     Button(
-      onClick = { Log.d("Click", "Confirm Reset") },
+      onClick = {
+        Log.d("Chron", "Confirm Reset")
+
+        navController.navigate(NavRoutes.Login.route)
+      },
       enabled = passwordsMatch && allFieldsNotEmpty && isPasswordValid,
       modifier = Modifier
         .fillMaxWidth()

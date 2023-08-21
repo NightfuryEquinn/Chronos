@@ -9,7 +9,7 @@ import com.example.chronos.realm.realmclass.Chron
 import kotlinx.coroutines.launch
 
 class RegisterVM: ViewModel() {
-  // Insert new chron
+  // Insert new chron data
   fun insertChron(newChron: Chron) {
     viewModelScope.launch {
       val repo = CRUDoverwrite(Connection.connectDB())
