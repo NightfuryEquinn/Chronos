@@ -9,14 +9,13 @@ class Epheron : RealmObject {
   @PrimaryKey
   var _epheron_id : ObjectId = ObjectId()
 
+  var epheron_title: String = ""
   var epheron_isComplete : Boolean = false
-  var epheron_startDate : String = ""
-  var epheron_endDate : String = ""
+  var epheron_start : String = ""
+  var epheron_end : String = ""
   var epheron_duration : String = ""
   var epheron_description : String = ""
-
-  @Ignore
-  var epheron_priority: EpheronPriorityLevel = EpheronPriorityLevel.LOW
+  var epheron_priority: String = ""
 
   var chron_id : Chron? = null
 }

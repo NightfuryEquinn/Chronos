@@ -36,7 +36,7 @@ fun InnerScreen() {
     },
     bottomBar = {
       BottomNavBar(navController = navController)
-    }
+    },
   )
 }
 
