@@ -10,6 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.chronos.ui.pagesinner.CalendarPage
+import com.example.chronos.ui.pagesinner.EditTaskPage
+import com.example.chronos.ui.pagesinner.PriorityBasedPage
+import com.example.chronos.ui.pagesinner.TimeBasedPage
 import com.example.chronos.ui.theme.ChronosTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +22,7 @@ class MainActivity : ComponentActivity() {
     setContent {
       ChronosTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-          InnerScreen()
+          EditTaskPage()
         }
       }
     }
@@ -30,6 +33,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainPreview() {
   ChronosTheme {
-    InnerScreen()
+    EditTaskPage()
   }
 }

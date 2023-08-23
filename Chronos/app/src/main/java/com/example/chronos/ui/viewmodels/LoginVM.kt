@@ -1,6 +1,5 @@
 package com.example.chronos.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.chronos.realm.dbconfig.CRUDoverwrite
 import com.example.chronos.realm.dbconfig.Connection

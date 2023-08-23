@@ -3,17 +3,29 @@ package com.example.chronos.ui.pagesinner
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -24,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -43,21 +56,22 @@ import com.maxkeppeler.sheets.list.ListDialog
 import com.maxkeppeler.sheets.list.models.ListOption
 import com.maxkeppeler.sheets.list.models.ListSelection
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun CreatePage() {
+fun EditTaskPage() {
   // State variables
-  var title by remember { mutableStateOf("") }
-  var description by remember { mutableStateOf("") }
-  var startDate by remember { mutableStateOf("") }
-  var endDate by remember { mutableStateOf("") }
-  var priority by remember { mutableStateOf("") }
+  var updateTitle by remember { mutableStateOf("") }
+  var updateDescription by remember { mutableStateOf("") }
+  var updateStartDate by remember { mutableStateOf("") }
+  var updateEndDate by remember { mutableStateOf("") }
+  var updatePriority by remember { mutableStateOf("") }
+  var updateIsCompleted by remember { mutableStateOf(false) }
 
   // Access keyboard
   val keyboardController = LocalSoftwareKeyboardController.current
 
   // Validations
-  val allFieldsNotEmpty = title.isNotBlank() && description.isNotBlank() && startDate.isNotBlank() && endDate.isNotBlank() && priority.isNotBlank()
+  val allFieldsNotEmpty = updateTitle.isNotBlank() && updateDescription.isNotBlank() && updateStartDate.isNotBlank() && updateEndDate.isNotBlank() && updatePriority.isNotBlank()
 
   // Calendar date time dialog
   val startDateTimeState = rememberUseCaseState()
@@ -69,7 +83,7 @@ fun CreatePage() {
   DateTimeDialog(
     state = startDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
-      startDate = newDateTime.toString()
+      updateStartDate = newDateTime.toString()
       displayStartDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
     }
   )
@@ -77,7 +91,7 @@ fun CreatePage() {
   DateTimeDialog(
     state = endDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
-      endDate = newDateTime.toString()
+      updateEndDate = newDateTime.toString()
       displayEndDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
     }
   )
@@ -98,7 +112,7 @@ fun CreatePage() {
     selection = ListSelection.Single(
       options = options
     ) { _, option ->
-      priority = option.titleText
+      updatePriority = option.titleText
       displayOption = option.titleText
     }
   )
@@ -106,7 +120,8 @@ fun CreatePage() {
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .background(Color(0xFF100C09)),
+      .background(Color(0xFF100C09))
+      .verticalScroll(rememberScrollState()),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Image(
@@ -118,7 +133,7 @@ fun CreatePage() {
     )
 
     Text(
-      text = "CREATING TASK",
+      text = "EDITING TASK",
       style = TextStyle(
         color = Color(0xFFA49A8E),
         fontSize = 36.sp,
@@ -129,11 +144,11 @@ fun CreatePage() {
     )
 
     TextField(
-      value = title,
-      onValueChange = { title = it },
+      value = updateTitle,
+      onValueChange = { updateTitle = it },
       label = {
         Text(
-          text = "TITLE",
+          text = "UPDATE TITLE",
           style = TextStyle(
             fontFamily = FontFamily(Font(R.font.corm))
           )
@@ -155,11 +170,11 @@ fun CreatePage() {
     )
 
     TextField(
-      value = description,
-      onValueChange = { description = it },
+      value = updateDescription,
+      onValueChange = { updateDescription = it },
       label = {
         Text(
-          text = "DESCRIPTION",
+          text = "UPDATE DESCRIPTION",
           style = TextStyle(
             fontFamily = FontFamily(Font(R.font.corm))
           )
@@ -245,22 +260,94 @@ fun CreatePage() {
       )
     }
 
-    Button(
-      onClick = {
-        Log.d("Chron", "Save")
-      },
-      enabled = allFieldsNotEmpty,
+    Row(
       modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 96.dp, vertical = 24.dp)
+        .padding(horizontal = 24.dp, vertical = 8.dp)
+        .fillMaxWidth(),
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically
     ) {
       Text(
-        text = "SAVE",
+        text = "TASK COMPLETED?",
         style = TextStyle(
+          color = Color(0xFFA49A8E),
           fontSize = 16.sp,
           fontFamily = FontFamily(Font(R.font.oswald))
         )
       )
+
+      Checkbox(
+        checked = updateIsCompleted,
+        onCheckedChange = {
+          updateIsCompleted = it
+          Log.d("Chron", updateIsCompleted.toString())
+        }
+      )
+    }
+
+    Row(
+      modifier = Modifier
+        .padding(horizontal = 48.dp, vertical = 16.dp)
+        .fillMaxWidth(),
+      horizontalArrangement = Arrangement.Center
+    ) {
+      Box(
+        modifier = Modifier
+          .padding(16.dp)
+      ) {
+        IconButton(
+          onClick = {
+            Log.d("Chron", "Delete")
+          },
+          modifier = Modifier
+            .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
+            .background(Color(0xFFE4DDD5))
+        ) {
+          Icon(
+            imageVector = Icons.Filled.Delete,
+            contentDescription = "Delete",
+          )
+        }
+      }
+
+      Box(
+        modifier = Modifier
+          .padding(16.dp)
+      ) {
+        IconButton(
+          onClick = {
+            Log.d("Chron", "Done")
+          },
+          enabled = allFieldsNotEmpty,
+          modifier = Modifier
+            .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
+            .background(Color(0xFFE4DDD5))
+        ) {
+          Icon(
+            imageVector = Icons.Filled.Done,
+            contentDescription = "Save",
+          )
+        }
+      }
+
+      Box(
+        modifier = Modifier
+          .padding(16.dp)
+      ) {
+        IconButton(
+          onClick = {
+            Log.d("Chron", "Back")
+          },
+          modifier = Modifier
+            .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
+            .background(Color(0xFFE4DDD5))
+        ) {
+          Icon(
+            imageVector = Icons.Filled.ArrowBack,
+            contentDescription = "Back",
+          )
+        }
+      }
     }
   }
 }
