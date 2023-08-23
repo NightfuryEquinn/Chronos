@@ -11,16 +11,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,16 +34,20 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.ui.navigations.ExtraRoutes
 
 @Composable
-fun ProfilePage() {
+fun ProfilePage(navController: NavHostController) {
+  // State variables
+  var isChecked by remember { mutableStateOf(false) }
+
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .background(Color(0xFF100C09))
-      .verticalScroll(rememberScrollState()),
-    horizontalAlignment = Alignment.CenterHorizontally
+      .background(Color(0xFF100C09)),
+    horizontalAlignment = Alignment.Start
   ) {
     Image(
       painter = painterResource(id = R.drawable.logo),
@@ -48,6 +55,7 @@ fun ProfilePage() {
       modifier = Modifier
         .padding(top = 16.dp)
         .size(150.dp)
+        .align(Alignment.CenterHorizontally)
     )
 
     Text(
@@ -58,7 +66,7 @@ fun ProfilePage() {
         fontFamily = FontFamily(Font(R.font.oswald))
       ),
       modifier = Modifier
-        .padding(bottom = 16.dp)
+        .padding(start = 24.dp, bottom = 16.dp)
     )
 
     Box(
@@ -77,7 +85,7 @@ fun ProfilePage() {
             fontFamily = FontFamily(Font(R.font.corm))
           ),
           modifier = Modifier
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
         )
 
         Text(
@@ -86,7 +94,7 @@ fun ProfilePage() {
             fontFamily = FontFamily(Font(R.font.corm))
           ),
           modifier = Modifier
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
         )
       }
     }
@@ -122,6 +130,7 @@ fun ProfilePage() {
       ) {
         IconButton(
           onClick = {
+            navController.navigate(ExtraRoutes.UpdateProfile.route)
             Log.d("Chron", "Edit Profile")
           },
           modifier = Modifier
@@ -131,6 +140,69 @@ fun ProfilePage() {
           Icon(
             imageVector = Icons.Filled.Edit,
             contentDescription = "Edit Profile",
+          )
+        }
+      }
+    }
+
+    Text(
+      text = "SETTING",
+      style = TextStyle(
+        color = Color(0xFFA49A8E),
+        fontSize = 36.sp,
+        fontFamily = FontFamily(Font(R.font.oswald))
+      ),
+      modifier = Modifier
+        .padding(start = 24.dp, bottom = 16.dp)
+    )
+
+    Box(
+      modifier = Modifier
+        .padding(horizontal = 16.dp)
+    ) {
+      Box(
+        modifier = Modifier
+          .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
+          .background(Color(0xFFE4DDD5))
+          .fillMaxWidth()
+      ) {
+        Row(
+          modifier = Modifier
+            .padding(4.dp)
+            .fillMaxWidth(),
+          horizontalArrangement = Arrangement.Center
+        ) {
+          Column(
+            modifier = Modifier
+              .padding(4.dp)
+          ) {
+            Text(
+              text = "Toggle Filter",
+              style = TextStyle(
+                fontSize = 16.sp,
+                fontFamily = FontFamily(Font(R.font.oswald))
+              ),
+              modifier = Modifier
+                .padding(4.dp)
+            )
+
+            Text(
+              text = "Arrange tasks based on time or priority",
+              style = TextStyle(
+                fontFamily = FontFamily(Font(R.font.corm))
+              ),
+              modifier = Modifier
+                .padding(4.dp)
+            )
+          }
+
+          Switch(
+            checked = isChecked,
+            onCheckedChange = {
+              isChecked = it
+              Log.d("Chron", isChecked.toString())
+            },
+            modifier = Modifier.padding(top = 4.dp, end = 4.dp, bottom = 4.dp, start = 12.dp)
           )
         }
       }

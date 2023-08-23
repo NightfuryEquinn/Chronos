@@ -74,6 +74,7 @@ fun CalendarPage() {
         update = {
           it.setOnDateChangeListener { _, year, month, day ->
             date = "$day - ${month + 1} - $year"
+            Log.d("Chron", date)
           }
         },
         modifier = Modifier

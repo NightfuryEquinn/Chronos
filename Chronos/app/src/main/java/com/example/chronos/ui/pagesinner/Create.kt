@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chronos.R
@@ -57,6 +59,9 @@ fun CreatePage() {
 
   // Access keyboard
   val keyboardController = LocalSoftwareKeyboardController.current
+
+  // Validations
+  val allFieldsNotEmpty = title.isNotBlank() && description.isNotBlank() && startDate.isNotBlank() && endDate.isNotBlank() && priority.isNotBlank()
 
   // Calendar date time dialog
   val startDateTimeState = rememberUseCaseState()
@@ -105,8 +110,7 @@ fun CreatePage() {
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .background(Color(0xFF100C09))
-      .verticalScroll(rememberScrollState()),
+      .background(Color(0xFF100C09)),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Image(
@@ -180,40 +184,50 @@ fun CreatePage() {
         .padding(horizontal = 24.dp, vertical = 8.dp)
     )
 
-    Button(
-      onClick = {
-        startDateTimeState.show()
-      },
-      colors = ButtonDefaults.buttonColors(Color(0xFFE4DDD5)),
+    Row(
       modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
-      Text(
-        text = if(displayStartDate == "") "START DATE AND TIME" else displayStartDate,
-        style = TextStyle(
-          color = Color(0xFF775A00),
-          fontFamily = FontFamily(Font(R.font.corm))
+      Button(
+        onClick = {
+          startDateTimeState.show()
+        },
+        colors = ButtonDefaults.buttonColors(Color(0xFFE4DDD5)),
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(top = 8.dp, end = 4.dp, bottom = 8.dp)
+          .weight(1f)
+      ) {
+        Text(
+          text = if(displayStartDate == "") "START DATE AND TIME" else displayStartDate,
+          style = TextStyle(
+            color = Color(0xFF775A00),
+            fontFamily = FontFamily(Font(R.font.corm)),
+            textAlign = TextAlign.Center
+          )
         )
-      )
-    }
+      }
 
-    Button(
-      onClick = {
-        endDateTimeState.show()
-      },
-      colors = ButtonDefaults.buttonColors(Color(0xFFE4DDD5)),
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 24.dp, vertical = 8.dp)
-    ) {
-      Text(
-        text = if(displayEndDate == "") "END DATE AND TIME" else displayEndDate,
-        style = TextStyle(
-          color = Color(0xFF775A00),
-          fontFamily = FontFamily(Font(R.font.corm))
+      Button(
+        onClick = {
+          endDateTimeState.show()
+        },
+        colors = ButtonDefaults.buttonColors(Color(0xFFE4DDD5)),
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(top = 8.dp, bottom = 8.dp, start = 4.dp)
+          .weight(1f)
+      ) {
+        Text(
+          text = if(displayEndDate == "") "END DATE AND TIME" else displayEndDate,
+          style = TextStyle(
+            color = Color(0xFF775A00),
+            fontFamily = FontFamily(Font(R.font.corm)),
+            textAlign = TextAlign.Center
+          )
         )
-      )
+      }
     }
 
     Button(
@@ -239,6 +253,7 @@ fun CreatePage() {
       onClick = {
         Log.d("Chron", "Save")
       },
+      enabled = allFieldsNotEmpty,
       modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 96.dp, vertical = 24.dp)
@@ -251,9 +266,5 @@ fun CreatePage() {
         )
       )
     }
-
-    Spacer(
-      modifier = Modifier.height(72.dp)
-    )
   }
 }
