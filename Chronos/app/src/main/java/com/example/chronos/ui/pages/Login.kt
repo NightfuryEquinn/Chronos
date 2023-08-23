@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pages
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -131,13 +130,7 @@ fun LoginPage(navController: NavHostController, loginVM: LoginVM = viewModel()) 
 
     Button(
       onClick = {
-        if(loginVM.validateChron(username, password)) {
-          Log.d("Chron", "Success")
-        }
-        else
-        {
-          Log.d("Chron", "Fail")
-        }
+        loginVM.assignGlobal(username, password, navController)
       },
       enabled = allFieldsNotEmpty,
       modifier = Modifier
