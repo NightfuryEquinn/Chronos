@@ -44,11 +44,11 @@ import com.example.chronos.ui.navigations.InnerNavRoutes
 import com.example.chronos.ui.task.PriorityTaskBlockComponent
 import com.example.chronos.ui.task.TimeTaskBlockComponent
 import com.example.chronos.ui.viewmodels.CalendarVM
+import com.example.chronos.ui.viewmodels.TimeBasedVM
 
 @Composable
-fun TimeBasedPage(navController: NavHostController, calendarVM: CalendarVM = viewModel()) {
-  val theSelectedDateState = calendarVM.selectedDate.collectAsState()
-  val theSelectedDate = theSelectedDateState.value
+fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = viewModel()) {
+  val selectedDate = timeBasedVM.parseThroughTimeBased()
 
   Column(
     modifier = Modifier
@@ -66,16 +66,18 @@ fun TimeBasedPage(navController: NavHostController, calendarVM: CalendarVM = vie
           .padding(top = 24.dp, end = 24.dp, bottom = 8.dp, start = 16.dp),
         verticalArrangement = Arrangement.Center
       ) {
-        Text(
-          text = theSelectedDate,
-          style = TextStyle(
-            color = Color(0xFFA49A8E),
-            fontSize = 24.sp,
-            fontFamily = FontFamily(Font(R.font.oswald))
-          ),
-          modifier = Modifier
-            .padding(bottom = 12.dp)
-        )
+        if (selectedDate != null) {
+          Text(
+            text = selectedDate,
+            style = TextStyle(
+              color = Color(0xFFA49A8E),
+              fontSize = 24.sp,
+              fontFamily = FontFamily(Font(R.font.oswald))
+            ),
+            modifier = Modifier
+              .padding(bottom = 12.dp)
+          )
+        }
 
         Text(
           text = "Make every seconds count",

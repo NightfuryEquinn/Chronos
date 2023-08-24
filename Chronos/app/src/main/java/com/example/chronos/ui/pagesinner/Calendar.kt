@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pagesinner
 
-import android.util.Log
 import android.widget.CalendarView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -74,9 +73,8 @@ fun CalendarPage(navController: NavHostController, calendarVM: CalendarVM = view
         },
         update = {
           it.setOnDateChangeListener { _, year, month, day ->
-            val monthName = monthNames[month + 1]
+            val monthName = monthNames[month]
             date = "$day $monthName $year"
-            Log.d("Chron", date)
 
             calendarVM.parseToTimeBased(date)
 
