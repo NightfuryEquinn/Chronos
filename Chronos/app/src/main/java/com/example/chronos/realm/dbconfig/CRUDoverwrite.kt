@@ -3,6 +3,7 @@ package com.example.chronos.realm.dbconfig
 import com.example.chronos.realm.realmclass.Chron
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
+import org.mongodb.kbson.BsonObjectId
 import org.mongodb.kbson.ObjectId
 
 
@@ -24,10 +25,22 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
     }
   }
 
-  // Update existing chron data
-  override suspend fun updateChron(email: String, password: String) {
+  // Update existing chron password with email
+  override suspend fun updateChronPassword(email: String, password: String) {
     realm.write {
       val theChron = this.query<Chron>("chronEmail = $0", email).first().find()
+
+      theChron?.chronPassword = password
+    }
+  }
+
+  // Update existing chron profile
+  override suspend fun updateChronProfile(chronId: String, username: String, email: String, password: String) {
+    realm.write {
+      val theChron = this.query<Chron>("_chron_id = $0", ObjectId(chronId)).first().find()
+
+      theChron?.chronUsername = username
+      theChron?.chronEmail = email
       theChron?.chronPassword = password
     }
   }

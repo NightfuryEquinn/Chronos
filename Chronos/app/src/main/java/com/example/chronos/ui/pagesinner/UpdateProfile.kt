@@ -44,17 +44,20 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.navigations.InnerNavRoutes
+import com.example.chronos.ui.viewmodels.ProfileVM
 import com.example.chronos.validation.isValidEmail
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun UpdateProfilePage(navController: NavHostController) {
+fun UpdateProfilePage(navController: NavHostController, profileVM: ProfileVM = viewModel()) {
   // State variables
-  var updateEmail by remember { mutableStateOf("") }
-  var updateUsername by remember { mutableStateOf("") }
+  var updateEmail by remember { mutableStateOf("${UserSession.sessionEmail}") }
+  var updateUsername by remember { mutableStateOf("${UserSession.sessionUsername}") }
   var updatePassword by remember { mutableStateOf("") }
   var updateConfirmPassword by remember { mutableStateOf("") }
 
@@ -248,6 +251,8 @@ fun UpdateProfilePage(navController: NavHostController) {
       ) {
         IconButton(
           onClick = {
+            profileVM.updateChronAndSession(updateUsername, updateEmail, updatePassword, navController)
+
             Log.d("Chron", "Save Profile")
           },
           enabled = passwordsMatch && allFieldsNotEmpty && isEmailValid && isPasswordValid,

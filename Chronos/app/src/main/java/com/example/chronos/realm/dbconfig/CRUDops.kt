@@ -9,6 +9,7 @@ interface CRUDops {
   fun filterData(email: String) : List<Chron>
 
   suspend fun insertChron(chron: Chron)
-  suspend fun updateChron(email: String, password: String)
+  suspend fun updateChronPassword(email: String, password: String)
+  suspend fun updateChronProfile(chronId: String, username: String, email: String, password: String)
   suspend fun deleteChron(id: ObjectId)
 }

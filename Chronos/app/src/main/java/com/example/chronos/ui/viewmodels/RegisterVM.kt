@@ -20,6 +20,7 @@ class RegisterVM: ViewModel() {
       if(!usedUsername(newChron.chronUsername)) {
         if(!usedEmail(newChron.chronEmail)) {
           repo.insertChron(newChron)
+
           Log.d("Chron", "Success")
 
           navController.navigate(NavRoutes.Login.route)

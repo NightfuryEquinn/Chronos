@@ -52,7 +52,7 @@ fun InnerNavigationHost(navController: NavHostController) {
       if(UserSession.sessionToken == null) {
         navController.navigate("MainScreen")
       } else {
-        navController.navigate(InnerNavRoutes.Profile.route)
+        navController.navigate(InnerNavRoutes.Calendar.route)
       }
     }
 

@@ -23,7 +23,7 @@ class ForgotVM: ViewModel() {
       }
 
       if(isExistingChron != null) {
-        repo.updateChron(email, password)
+        repo.updateChronPassword(email, password)
         Log.d("Chron", "Success Reset")
 
         navController.navigate(NavRoutes.Login.route)

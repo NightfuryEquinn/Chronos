@@ -6,21 +6,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.edit
 import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.pages.LoadingPage
-import com.example.chronos.ui.pagesinner.CalendarPage
-import com.example.chronos.ui.pagesinner.EditTaskPage
-import com.example.chronos.ui.pagesinner.PriorityBasedPage
-import com.example.chronos.ui.pagesinner.TimeBasedPage
 import com.example.chronos.ui.theme.ChronosTheme
 import com.example.chronos.ui.viewmodels.LoadingVM
 
@@ -70,5 +63,13 @@ class MainActivity : ComponentActivity() {
       putString("session_username", UserSession.sessionUsername)
       putString("session_email", UserSession.sessionEmail)
     }
+  }
+
+  // Ignore deprecation
+  @Deprecated("Deprecated in Java")
+  override fun onBackPressed() {
+    super.onBackPressed()
+
+    finish()
   }
 }

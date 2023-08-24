@@ -19,9 +19,10 @@ class LoginVM: ViewModel() {
     if(validateChron(username, password)) {
       val theChronData = realm.query<Chron>("chronUsername = $0 AND chronPassword = $1", username, password).first().find()
 
-      UserSession.sessionToken = theChronData?._chron_id.toString()
+      UserSession.sessionToken = theChronData?._chron_id?.toHexString()
       UserSession.sessionUsername = theChronData?.chronUsername
       UserSession.sessionEmail = theChronData?.chronEmail
+      UserSession.sessionPassword = theChronData?.chronPassword
 
       // Navigate to inner screen and clear main screen
       navController.navigate("InnerScreen") {
