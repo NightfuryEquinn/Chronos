@@ -1,5 +1,6 @@
 package com.example.chronos
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.edit
+import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.pages.LoadingPage
 import com.example.chronos.ui.pagesinner.CalendarPage
 import com.example.chronos.ui.pagesinner.EditTaskPage
@@ -22,7 +25,11 @@ import com.example.chronos.ui.theme.ChronosTheme
 import com.example.chronos.ui.viewmodels.LoadingVM
 
 class MainActivity : ComponentActivity() {
+  // Get loading view model
   private val loadingVM by viewModels<LoadingVM>()
+
+  // Shared preferences
+  private lateinit var sharedPreferences: SharedPreferences
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -40,6 +47,28 @@ class MainActivity : ComponentActivity() {
           }
         }
       }
+    }
+
+    sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+
+    // Retrieve data from shared preferences
+    val sessionToken = sharedPreferences.getString("session_token", null)
+    val sessionUsername = sharedPreferences.getString("session_username", null)
+    val sessionEmail = sharedPreferences.getString("session_email", null)
+
+    // Restore the user session
+    UserSession.sessionToken = sessionToken
+    UserSession.sessionUsername = sessionUsername
+    UserSession.sessionEmail = sessionEmail
+  }
+
+  override fun onStop() {
+    super.onStop()
+
+    sharedPreferences.edit {
+      putString("session_token", UserSession.sessionToken)
+      putString("session_username", UserSession.sessionUsername)
+      putString("session_email", UserSession.sessionEmail)
     }
   }
 }

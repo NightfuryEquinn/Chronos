@@ -6,6 +6,7 @@ import com.example.chronos.realm.dbconfig.CRUDoverwrite
 import com.example.chronos.realm.dbconfig.Connection
 import com.example.chronos.realm.realmclass.Chron
 import com.example.chronos.realm.realmclass.UserSession
+import com.example.chronos.ui.navigations.NavRoutes
 import io.realm.kotlin.ext.query
 
 class LoginVM: ViewModel() {
@@ -22,7 +23,12 @@ class LoginVM: ViewModel() {
       UserSession.sessionUsername = theChronData?.chronUsername
       UserSession.sessionEmail = theChronData?.chronEmail
 
-      navController.navigate("InnerScreen")
+      // Navigate to inner screen and clear main screen
+      navController.navigate("InnerScreen") {
+        popUpTo(NavRoutes.Login.route) {
+          inclusive = true
+        }
+      }
     }
   }
 

@@ -34,12 +34,15 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.navigations.ExtraRoutes
+import com.example.chronos.ui.viewmodels.ProfileVM
 
 @Composable
-fun ProfilePage(navController: NavHostController) {
+fun ProfilePage(navController: NavHostController, profileVM: ProfileVM = viewModel()) {
   // State variables
   var isChecked by remember { mutableStateOf(false) }
 
@@ -80,7 +83,7 @@ fun ProfilePage(navController: NavHostController) {
           .fillMaxWidth()
       ) {
         Text(
-          text = "Username: ",
+          text = "Username: ${UserSession.sessionUsername}",
           style = TextStyle(
             fontFamily = FontFamily(Font(R.font.corm))
           ),
@@ -89,7 +92,7 @@ fun ProfilePage(navController: NavHostController) {
         )
 
         Text(
-          text = "Email Address: ",
+          text = "Email Address: ${UserSession.sessionEmail}",
           style = TextStyle(
             fontFamily = FontFamily(Font(R.font.corm))
           ),
@@ -111,6 +114,7 @@ fun ProfilePage(navController: NavHostController) {
       ) {
         IconButton(
           onClick = {
+            profileVM.clearAndLogOut(navController = navController)
             Log.d("Chron", "Log Out")
           },
           modifier = Modifier
