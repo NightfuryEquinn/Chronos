@@ -35,17 +35,23 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chronos.R
+import com.example.chronos.realm.realmclass.Epheron
+import com.example.chronos.realm.realmclass.UserSession
+import com.example.chronos.ui.viewmodels.CreateVM
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.date_time.DateTimeDialog
 import com.maxkeppeler.sheets.date_time.models.DateTimeSelection
 import com.maxkeppeler.sheets.list.ListDialog
 import com.maxkeppeler.sheets.list.models.ListOption
 import com.maxkeppeler.sheets.list.models.ListSelection
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun CreatePage() {
+fun CreatePage(createVM: CreateVM = viewModel()) {
   // State variables
   var title by remember { mutableStateOf("") }
   var description by remember { mutableStateOf("") }
@@ -66,9 +72,13 @@ fun CreatePage() {
   var displayStartDate by remember { mutableStateOf("") }
   var displayEndDate by remember { mutableStateOf ("") }
 
+  var calculateStartDate by remember { mutableStateOf<LocalDateTime?>(null) }
+  var calculateEndDate by remember { mutableStateOf<LocalDateTime?>(null) }
+
   DateTimeDialog(
     state = startDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
+      calculateStartDate = newDateTime
       startDate = newDateTime.toString()
       displayStartDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
     }
@@ -77,6 +87,7 @@ fun CreatePage() {
   DateTimeDialog(
     state = endDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
+      calculateEndDate = newDateTime
       endDate = newDateTime.toString()
       displayEndDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
     }
@@ -247,7 +258,24 @@ fun CreatePage() {
 
     Button(
       onClick = {
-        Log.d("Chron", "Save")
+        val newEpheron = Epheron().apply {
+          epheronTitle = title
+          epheronStart = startDate
+          epheronEnd = endDate
+          epheronDuration = createVM.calculateDuration(calculateStartDate, calculateEndDate)
+          epheronDescription = description
+          epheronPriority = priority
+          chronId = UserSession.sessionToken
+        }
+        createVM.insertEpheron(newEpheron)
+
+        Log.d("Epheron", "Save, ${newEpheron.epheronDuration}")
+
+        title = ""
+        displayStartDate = ""
+        displayEndDate = ""
+        description = ""
+        displayOption = ""
       },
       enabled = allFieldsNotEmpty,
       modifier = Modifier

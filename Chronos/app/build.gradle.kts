@@ -48,14 +48,24 @@ android {
 }
 
 dependencies {
+  // For View Model
   implementation("androidx.core:core-ktx:1.10.1")
   implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+  // For Compose Dialogs
   implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.1.1")
   implementation("com.maxkeppeler.sheets-compose-dialogs:date-time:1.1.1")
   implementation("com.maxkeppeler.sheets-compose-dialogs:list:1.1.1")
+
+  // For Navigation
   implementation("androidx.compose.material:material:1.4.0")
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
   implementation("androidx.navigation:navigation-compose:2.6.0")
+
+  // For Calculating Date Time
+  implementation("androidx.compose.ui:ui:x.y.z")
+  implementation("androidx.compose.foundation:foundation:x.y.z")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.0")
 
   implementation("androidx.activity:activity-compose:1.7.2")
   implementation(platform("androidx.compose:compose-bom:2023.03.00"))

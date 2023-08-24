@@ -9,13 +9,13 @@ class Epheron : RealmObject {
   @PrimaryKey
   var _epheron_id : ObjectId = ObjectId()
 
-  var epheron_title: String = ""
-  var epheron_isComplete : Boolean = false
-  var epheron_start : String = ""
-  var epheron_end : String = ""
-  var epheron_duration : String = ""
-  var epheron_description : String = ""
-  var epheron_priority: String = ""
+  var epheronTitle: String = ""
+  var epheronIsComplete : Boolean = false
+  var epheronStart : String = ""
+  var epheronEnd : String = ""
+  var epheronDuration : String = ""
+  var epheronDescription : String = ""
+  var epheronPriority: String = ""
 
-  var chron_id : Chron? = null
+  var chronId : String? = null
 }

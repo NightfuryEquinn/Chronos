@@ -20,6 +20,7 @@ import com.example.chronos.ui.pagesinner.BottomNavBar
 import com.example.chronos.ui.pagesinner.CalendarPage
 import com.example.chronos.ui.pagesinner.CreatePage
 import com.example.chronos.ui.pagesinner.ProfilePage
+import com.example.chronos.ui.pagesinner.TimeBasedPage
 import com.example.chronos.ui.pagesinner.UpdateProfilePage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -69,11 +70,15 @@ fun InnerNavigationHost(navController: NavHostController) {
     }
 
     composable(InnerNavRoutes.Calendar.route) {
-      CalendarPage()
+      CalendarPage(navController = navController)
     }
 
     composable(ExtraRoutes.UpdateProfile.route) {
       UpdateProfilePage(navController = navController)
+    }
+
+    composable(ExtraRoutes.TimeBased.route) {
+      TimeBasedPage(navController = navController)
     }
   }
 }

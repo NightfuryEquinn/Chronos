@@ -24,12 +24,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.ui.navigations.ExtraRoutes
+import com.example.chronos.ui.viewmodels.CalendarVM
 
 @Composable
-fun CalendarPage() {
+fun CalendarPage(navController: NavHostController, calendarVM: CalendarVM = viewModel()) {
   // State variables
   var date by remember { mutableStateOf("") }
+
+  val monthNames = arrayOf(
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  )
 
   Column(
     modifier = Modifier
@@ -65,8 +74,13 @@ fun CalendarPage() {
         },
         update = {
           it.setOnDateChangeListener { _, year, month, day ->
-            date = "$day - ${month + 1} - $year"
+            val monthName = monthNames[month + 1]
+            date = "$day $monthName $year"
             Log.d("Chron", date)
+
+            calendarVM.parseToTimeBased(date)
+
+            navController.navigate(ExtraRoutes.TimeBased.route)
           }
         },
         modifier = Modifier
