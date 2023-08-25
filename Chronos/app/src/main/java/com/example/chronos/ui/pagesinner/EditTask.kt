@@ -48,7 +48,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.ui.navigations.InnerNavRoutes
+import com.example.chronos.ui.viewmodels.EditTaskVM
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.date_time.DateTimeDialog
 import com.maxkeppeler.sheets.date_time.models.DateTimeSelection
@@ -58,7 +62,7 @@ import com.maxkeppeler.sheets.list.models.ListSelection
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun EditTaskPage() {
+fun EditTaskPage(navController: NavHostController, editTaskVM: EditTaskVM = viewModel()) {
   // State variables
   var updateTitle by remember { mutableStateOf("") }
   var updateDescription by remember { mutableStateOf("") }
@@ -336,6 +340,8 @@ fun EditTaskPage() {
       ) {
         IconButton(
           onClick = {
+            navController.navigate(InnerNavRoutes.Calendar.route)
+
             Log.d("Chron", "Back")
           },
           modifier = Modifier
