@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,6 +25,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.navigations.ExtraRoutes
 import com.example.chronos.ui.viewmodels.CalendarVM
 
@@ -41,7 +41,6 @@ fun CalendarPage(navController: NavHostController, calendarVM: CalendarVM = view
 
   Column(
     modifier = Modifier
-      .fillMaxSize()
       .background(Color(0xFF100C09)),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
@@ -78,12 +77,21 @@ fun CalendarPage(navController: NavHostController, calendarVM: CalendarVM = view
 
             calendarVM.parseToTimeBased(date)
 
-            navController.navigate(ExtraRoutes.TimeBased.route)
+            if(UserSession.sessionFilterQuery == false) {
+              navController.navigate(ExtraRoutes.TimeBased.route)
+            } else {
+              navController.navigate(ExtraRoutes.PriorityBased.route)
+            }
           }
         },
         modifier = Modifier
           .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
       )
     }
+
+    Spacer(
+      modifier = Modifier
+        .padding(vertical = 72.dp)
+    )
   }
 }

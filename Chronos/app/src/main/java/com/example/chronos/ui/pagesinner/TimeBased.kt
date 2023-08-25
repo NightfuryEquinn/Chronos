@@ -21,12 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -49,12 +44,13 @@ import com.example.chronos.ui.viewmodels.TimeBasedVM
 @Composable
 fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = viewModel()) {
   val selectedDate = timeBasedVM.parseThroughTimeBased()
+  val listOfPending = timeBasedVM.fetchListOfPending()
+  val listOfComplete = timeBasedVM.fetchListOfComplete()
 
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .background(Color(0xFF100C09))
-      .verticalScroll(rememberScrollState()),
+      .background(Color(0xFF100C09)),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Row(
@@ -96,10 +92,13 @@ fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = v
           .size(125.dp)
       )
     }
-    
-    Box(
+
+    Column(
       modifier = Modifier
         .padding(horizontal = 24.dp)
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())
+        .weight(1f)
     ) {
       Text(
         text = "PENDING",
@@ -114,14 +113,48 @@ fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = v
           .fillMaxWidth()
           .padding(horizontal = 12.dp, vertical = 4.dp)
       )
-    }
-    
-    TimeTaskBlockComponent()
 
-    Box(
-      modifier = Modifier
-        .padding(top = 16.dp, end = 24.dp, start = 24.dp)
-    ) {
+      if (listOfPending.isNotEmpty()) {
+        listOfPending.forEach { epheron ->
+          TimeTaskBlockComponent(
+            taskTitle = epheron.epheronTitle,
+            taskStart = epheron.epheronStart,
+            taskEnd = epheron.epheronEnd,
+            taskDuration = epheron.epheronDuration,
+            taskDescription = epheron.epheronDescription
+          )
+        }
+      } else {
+        Box(
+          modifier = Modifier
+            .padding(vertical = 4.dp)
+        ) {
+          Column(
+            modifier = Modifier
+              .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
+              .background(Color(0xFFE4DDD5))
+              .fillMaxWidth()
+              .padding(vertical = 4.dp)
+          ) {
+            Text(
+              text = "No Pending Tasks",
+              style = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily(Font(R.font.corm))
+              ),
+              modifier = Modifier
+                .padding(horizontal = 8.dp)
+            )
+          }
+        }
+      }
+
+      Spacer(
+        modifier = Modifier
+          .padding(vertical = 8.dp)
+      )
+
       Text(
         text = "COMPLETED",
         style = TextStyle(
@@ -135,9 +168,37 @@ fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = v
           .fillMaxWidth()
           .padding(horizontal = 12.dp, vertical = 4.dp)
       )
-    }
 
-    PriorityTaskBlockComponent()
+      if (listOfComplete.isNotEmpty()) {
+        listOfComplete.forEach { epheron ->
+          PriorityTaskBlockComponent(epheron.epheronTitle)
+        }
+      } else {
+        Box(
+          modifier = Modifier
+            .padding(vertical = 4.dp)
+        ) {
+          Column(
+            modifier = Modifier
+              .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
+              .background(Color(0xFFE4DDD5))
+              .fillMaxWidth()
+              .padding(vertical = 4.dp)
+          ) {
+            Text(
+              text = "No Completed Tasks",
+              style = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily(Font(R.font.corm))
+              ),
+              modifier = Modifier
+                .padding(horizontal = 8.dp)
+            )
+          }
+        }
+      }
+    }
 
     Box(
       modifier = Modifier

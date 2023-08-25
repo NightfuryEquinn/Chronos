@@ -19,6 +19,7 @@ import com.example.chronos.ui.pages.LoginPage
 import com.example.chronos.ui.pagesinner.BottomNavBar
 import com.example.chronos.ui.pagesinner.CalendarPage
 import com.example.chronos.ui.pagesinner.CreatePage
+import com.example.chronos.ui.pagesinner.PriorityBasedPage
 import com.example.chronos.ui.pagesinner.ProfilePage
 import com.example.chronos.ui.pagesinner.TimeBasedPage
 import com.example.chronos.ui.pagesinner.UpdateProfilePage
@@ -79,6 +80,10 @@ fun InnerNavigationHost(navController: NavHostController) {
 
     composable(ExtraRoutes.TimeBased.route) {
       TimeBasedPage(navController = navController)
+    }
+
+    composable(ExtraRoutes.PriorityBased.route) {
+      PriorityBasedPage(navController = navController)
     }
   }
 }

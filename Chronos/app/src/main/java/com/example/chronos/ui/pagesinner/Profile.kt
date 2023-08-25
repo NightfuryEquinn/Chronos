@@ -43,9 +43,6 @@ import com.example.chronos.ui.viewmodels.ProfileVM
 
 @Composable
 fun ProfilePage(navController: NavHostController, profileVM: ProfileVM = viewModel()) {
-  // State variables
-  var isChecked by remember { mutableStateOf(false) }
-
   Column(
     modifier = Modifier
       .fillMaxSize()
@@ -201,10 +198,10 @@ fun ProfilePage(navController: NavHostController, profileVM: ProfileVM = viewMod
           }
 
           Switch(
-            checked = isChecked,
+            checked = UserSession.sessionFilterQuery == true,
             onCheckedChange = {
-              isChecked = it
-              Log.d("Chron", isChecked.toString())
+              UserSession.sessionFilterQuery = true
+              Log.d("Chron", UserSession.sessionFilterQuery.toString())
             },
             modifier = Modifier.padding(top = 4.dp, end = 4.dp, bottom = 4.dp, start = 12.dp)
           )

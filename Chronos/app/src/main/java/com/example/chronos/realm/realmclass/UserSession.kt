@@ -9,4 +9,5 @@ object UserSession {
 
   // Optional session variables
   var sessionSelectedDate: String? = null
+  var sessionFilterQuery: Boolean? = false
 }

@@ -48,11 +48,13 @@ class MainActivity : ComponentActivity() {
     val sessionToken = sharedPreferences.getString("session_token", null)
     val sessionUsername = sharedPreferences.getString("session_username", null)
     val sessionEmail = sharedPreferences.getString("session_email", null)
+    val sessionPassword = sharedPreferences.getString("session_password", null)
 
     // Restore the user session
     UserSession.sessionToken = sessionToken
     UserSession.sessionUsername = sessionUsername
     UserSession.sessionEmail = sessionEmail
+    UserSession.sessionPassword = sessionPassword
   }
 
   override fun onStop() {
@@ -62,6 +64,7 @@ class MainActivity : ComponentActivity() {
       putString("session_token", UserSession.sessionToken)
       putString("session_username", UserSession.sessionUsername)
       putString("session_email", UserSession.sessionEmail)
+      putString("session_password", UserSession.sessionPassword)
     }
   }
 

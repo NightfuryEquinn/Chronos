@@ -55,7 +55,7 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
   // For Epheron
   // Fetch all epheron data related to chron
   override fun fetchEpheron(chronId: String): List<Epheron> {
-    TODO()
+    return realm.query<Epheron>("chronId = $0", chronId).find()
   }
 
   // Insert new epheron data related to user session

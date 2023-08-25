@@ -26,12 +26,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chronos.R
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun TimeTaskBlockComponent() {
+fun TimeTaskBlockComponent(
+  taskTitle: String,
+  taskStart: String,
+  taskEnd: String,
+  taskDuration: String,
+  taskDescription: String
+) {
+  // Convert string to date
+  val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
+  val convertTaskStart = LocalDateTime.parse(taskStart, dateTimeFormatter)
+  val convertTaskEnd = LocalDateTime.parse(taskEnd, dateTimeFormatter)
+
+  val formattedTaskStart = convertTaskStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+  val formattedTaskEnd = convertTaskEnd.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+
   Box(
     modifier = Modifier
-      .padding(horizontal = 24.dp, vertical = 4.dp)
+      .padding(vertical = 4.dp)
   ) {
     Column(
       modifier = Modifier
@@ -43,15 +59,14 @@ fun TimeTaskBlockComponent() {
       Row(
         modifier = Modifier
           .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        horizontalArrangement = Arrangement.SpaceBetween
       ) {
         Column(
           modifier = Modifier
             .padding(horizontal = 12.dp, vertical = 4.dp)
         ) {
           Text(
-            text = "Meeting with the Minister",
+            text = taskTitle,
             style = TextStyle(
               fontSize = 20.sp,
               fontFamily = FontFamily(Font(R.font.oswald))
@@ -61,7 +76,7 @@ fun TimeTaskBlockComponent() {
           )
 
           Text(
-            text = "Time: 09:00 - 10:00",
+            text = "Start: $formattedTaskStart",
             style = TextStyle(
               fontFamily = FontFamily(Font(R.font.corm))
             ),
@@ -70,7 +85,16 @@ fun TimeTaskBlockComponent() {
           )
 
           Text(
-            text = "Duration: 1 hr",
+            text = "End: $formattedTaskEnd",
+            style = TextStyle(
+              fontFamily = FontFamily(Font(R.font.corm))
+            ),
+            modifier = Modifier
+              .padding(bottom = 4.dp)
+          )
+
+          Text(
+            text = "Duration: $taskDuration",
             style = TextStyle(
               fontFamily = FontFamily(Font(R.font.corm))
             ),
@@ -92,7 +116,7 @@ fun TimeTaskBlockComponent() {
       }
 
       Text(
-        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        text = taskDescription,
         style = TextStyle(
           fontFamily = FontFamily(Font(R.font.corm)),
           textAlign = TextAlign.Justify
@@ -105,10 +129,12 @@ fun TimeTaskBlockComponent() {
 }
 
 @Composable
-fun PriorityTaskBlockComponent() {
+fun PriorityTaskBlockComponent(
+  taskTitle: String
+) {
   Box(
     modifier = Modifier
-      .padding(horizontal = 24.dp, vertical = 4.dp)
+      .padding(vertical = 4.dp)
   ) {
     Row(
       modifier = Modifier
@@ -121,7 +147,7 @@ fun PriorityTaskBlockComponent() {
       verticalAlignment = Alignment.CenterVertically
     ) {
       Text(
-        text = "Meeting with the Minister",
+        text = taskTitle,
         style = TextStyle(
           fontSize = 20.sp,
           fontFamily = FontFamily(Font(R.font.oswald))

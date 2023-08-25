@@ -269,7 +269,7 @@ fun CreatePage(createVM: CreateVM = viewModel()) {
         }
         createVM.insertEpheron(newEpheron)
 
-        Log.d("Epheron", "Save, ${newEpheron.epheronDuration}")
+        Log.d("Epheron", "Save")
 
         title = ""
         displayStartDate = ""
