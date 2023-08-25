@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pages
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -204,7 +203,7 @@ fun ForgotPage(navController: NavHostController, forgotVM: ForgotVM = viewModel(
     }
 
     TextButton(
-      onClick = { Log.d("Click", "Contact Service") },
+      onClick = {  },
       modifier = Modifier
         .align(Alignment.CenterHorizontally)
     ) {

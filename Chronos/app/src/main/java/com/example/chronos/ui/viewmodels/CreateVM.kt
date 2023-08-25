@@ -1,14 +1,13 @@
 package com.example.chronos.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.chronos.realm.dbconfig.CRUDoverwrite
 import com.example.chronos.realm.dbconfig.Connection
 import com.example.chronos.realm.realmclass.Epheron
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import java.time.Duration
+import java.time.LocalDateTime
 
 class CreateVM: ViewModel() {
   private val repo = CRUDoverwrite(Connection.connectDB())
@@ -17,8 +16,6 @@ class CreateVM: ViewModel() {
   fun insertEpheron(newEpheron: Epheron) {
     viewModelScope.launch {
       repo.insertEpheron(newEpheron)
-
-      Log.d("Epheron", "Success")
     }
   }
 

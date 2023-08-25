@@ -1,7 +1,6 @@
 package com.example.chronos.realm.realmclass
 
 import io.realm.kotlin.types.RealmObject
-import io.realm.kotlin.types.annotations.Ignore
 import io.realm.kotlin.types.annotations.PrimaryKey
 import org.mongodb.kbson.ObjectId
 

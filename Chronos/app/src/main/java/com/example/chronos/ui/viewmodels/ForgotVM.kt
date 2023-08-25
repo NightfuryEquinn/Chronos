@@ -1,6 +1,5 @@
 package com.example.chronos.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -24,11 +23,8 @@ class ForgotVM: ViewModel() {
 
       if(isExistingChron != null) {
         repo.updateChronPassword(email, password)
-        Log.d("Chron", "Success Reset")
 
         navController.navigate(NavRoutes.Login.route)
-      } else {
-        Log.d("Chron", "Fail Reset")
       }
     }
   }

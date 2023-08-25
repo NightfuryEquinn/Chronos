@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pagesinner
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -305,8 +304,6 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
         IconButton(
           onClick = {
             navController.navigate(InnerNavRoutes.Calendar.route)
-
-            Log.d("Chron", "Back")
           },
           modifier = Modifier
             .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))

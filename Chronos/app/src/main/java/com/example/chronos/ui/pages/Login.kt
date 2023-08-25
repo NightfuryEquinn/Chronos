@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pages
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.chronos.R
-import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.navigations.NavRoutes
 import com.example.chronos.ui.viewmodels.LoginVM
 
@@ -133,8 +131,6 @@ fun LoginPage(navController: NavHostController, loginVM: LoginVM = viewModel()) 
     Button(
       onClick = {
         loginVM.assignGlobal(username, password, navController)
-
-        Log.d("Chron", "${UserSession.sessionToken}")
       },
       enabled = allFieldsNotEmpty,
       modifier = Modifier

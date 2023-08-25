@@ -1,6 +1,5 @@
 package com.example.chronos.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -21,14 +20,8 @@ class RegisterVM: ViewModel() {
         if(!usedEmail(newChron.chronEmail)) {
           repo.insertChron(newChron)
 
-          Log.d("Chron", "Success")
-
           navController.navigate(NavRoutes.Login.route)
-        } else {
-          Log.d("Chron", "Email address taken.")
         }
-      } else {
-        Log.d("Chron", "Username taken.")
       }
     }
   }

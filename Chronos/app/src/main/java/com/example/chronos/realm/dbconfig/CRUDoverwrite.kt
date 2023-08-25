@@ -5,8 +5,6 @@ import com.example.chronos.realm.realmclass.Epheron
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import org.mongodb.kbson.BsonObjectId
-import org.mongodb.kbson.ObjectId
-
 
 class CRUDoverwrite(private val realm: Realm) : CRUDops {
   // For Chron
@@ -39,7 +37,7 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
   // Update existing chron profile
   override suspend fun updateChronProfile(chronId: String, username: String, email: String, password: String) {
     realm.write {
-      val theChron = this.query<Chron>("_chron_id = $0", ObjectId(chronId)).first().find()
+      val theChron = this.query<Chron>("_chron_id = $0", BsonObjectId(chronId)).first().find()
 
       theChron?.chronUsername = username
       theChron?.chronEmail = email
@@ -71,7 +69,7 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
     isCompleted: Boolean
   ) {
     realm.write {
-      val theEpheron = this.query<Epheron>("_epheron_id = $0", ObjectId(epheronId)).first().find()
+      val theEpheron = this.query<Epheron>("_epheron_id = $0", BsonObjectId(epheronId)).first().find()
 
       theEpheron?.epheronTitle = title
       theEpheron?.epheronDescription = description
@@ -85,7 +83,7 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
   // Delete existing selected epheron data
   override suspend fun deleteEpheron(epheronId: String) {
     realm.write {
-      val theEpheron = this.query<Epheron>("_epheron_id = $0", ObjectId(epheronId)).first().find()
+      val theEpheron = this.query<Epheron>("_epheron_id = $0", BsonObjectId(epheronId)).first().find()
 
       if (theEpheron != null) {
         delete(theEpheron)

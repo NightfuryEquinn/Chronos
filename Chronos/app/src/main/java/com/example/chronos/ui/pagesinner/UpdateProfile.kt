@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pagesinner
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -232,7 +231,6 @@ fun UpdateProfilePage(navController: NavHostController, profileVM: ProfileVM = v
         IconButton(
           onClick = {
             navController.navigate(InnerNavRoutes.Profile.route)
-            Log.d("Chron", "Back")
           },
           modifier = Modifier
             .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
@@ -252,8 +250,6 @@ fun UpdateProfilePage(navController: NavHostController, profileVM: ProfileVM = v
         IconButton(
           onClick = {
             profileVM.updateChronAndSession(updateUsername, updateEmail, updatePassword, navController)
-
-            Log.d("Chron", "Save Profile")
           },
           enabled = passwordsMatch && allFieldsNotEmpty && isEmailValid && isPasswordValid,
           modifier = Modifier

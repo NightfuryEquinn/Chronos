@@ -1,6 +1,5 @@
 package com.example.chronos.ui.task
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,12 +24,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.chronos.R
 import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.navigations.ExtraRoutes
-import com.example.chronos.ui.viewmodels.TimeBasedVM
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -117,8 +114,6 @@ fun TimeTaskBlockComponent(
             UserSession.sessionEditTask = taskId
             UserSession.sessionEditTaskTitle = taskTitle
             UserSession.sessionEditTaskDescription = taskDescription
-
-            Log.d("Chron", "Edit Task")
           },
           modifier = Modifier
             .padding(end = 16.dp)
@@ -181,8 +176,6 @@ fun PriorityTaskBlockComponent(
           UserSession.sessionEditTask = taskId
           UserSession.sessionEditTaskTitle = taskTitle
           UserSession.sessionEditTaskDescription = taskDescription
-
-          Log.d("Chron", "Edit Task")
         },
         modifier = Modifier
           .padding(end = 16.dp)

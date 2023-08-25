@@ -1,6 +1,5 @@
 package com.example.chronos.ui.pagesinner
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -48,7 +47,6 @@ import com.maxkeppeler.sheets.list.ListDialog
 import com.maxkeppeler.sheets.list.models.ListOption
 import com.maxkeppeler.sheets.list.models.ListSelection
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -276,8 +274,6 @@ fun CreatePage(createVM: CreateVM = viewModel()) {
           chronId = UserSession.sessionToken
         }
         createVM.insertEpheron(newEpheron)
-
-        Log.d("Epheron", "Save")
 
         title = ""
         displayStartDate = ""

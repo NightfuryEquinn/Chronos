@@ -1,12 +1,10 @@
 package com.example.chronos.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.chronos.realm.dbconfig.CRUDoverwrite
 import com.example.chronos.realm.dbconfig.Connection
 import com.example.chronos.realm.realmclass.Epheron
 import com.example.chronos.realm.realmclass.UserSession
-import kotlinx.datetime.toLocalDateTime
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
