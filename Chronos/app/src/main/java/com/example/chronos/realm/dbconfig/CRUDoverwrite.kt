@@ -47,11 +47,6 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
     }
   }
 
-  // Delete existing chron data
-  override suspend fun deleteChron(id: ObjectId) {
-    TODO()
-  }
-
   // For Epheron
   // Fetch all epheron data related to chron
   override fun fetchEpheron(chronId: String): List<Epheron> {
@@ -62,6 +57,39 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
   override suspend fun insertEpheron(epheron: Epheron) {
     realm.write {
       copyToRealm(epheron)
+    }
+  }
+
+  // Update existing epheron data
+  override suspend fun updateEpheron(
+    epheronId: String,
+    title: String,
+    description: String,
+    startDate: String,
+    endDate: String,
+    priority: String,
+    isCompleted: Boolean
+  ) {
+    realm.write {
+      val theEpheron = this.query<Epheron>("_epheron_id = $0", ObjectId(epheronId)).first().find()
+
+      theEpheron?.epheronTitle = title
+      theEpheron?.epheronDescription = description
+      theEpheron?.epheronStart = startDate
+      theEpheron?.epheronEnd = endDate
+      theEpheron?.epheronPriority = priority
+      theEpheron?.epheronIsComplete = isCompleted
+    }
+  }
+
+  // Delete existing selected epheron data
+  override suspend fun deleteEpheron(epheronId: String) {
+    realm.write {
+      val theEpheron = this.query<Epheron>("_epheron_id = $0", ObjectId(epheronId)).first().find()
+
+      if (theEpheron != null) {
+        delete(theEpheron)
+      }
     }
   }
 }

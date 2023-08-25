@@ -40,6 +40,7 @@ import com.example.chronos.R
 import com.example.chronos.realm.realmclass.Epheron
 import com.example.chronos.realm.realmclass.UserSession
 import com.example.chronos.ui.viewmodels.CreateVM
+import com.example.chronos.validation.compareDates
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.date_time.DateTimeDialog
 import com.maxkeppeler.sheets.date_time.models.DateTimeSelection
@@ -65,6 +66,11 @@ fun CreatePage(createVM: CreateVM = viewModel()) {
   // Validations
   val allFieldsNotEmpty = title.isNotBlank() && description.isNotBlank() && startDate.isNotBlank() && endDate.isNotBlank() && priority.isNotBlank()
 
+  var checkStartDate by remember { mutableStateOf(LocalDateTime.now()) }
+  var checkEndDate by remember { mutableStateOf(LocalDateTime.now()) }
+
+  val validStartEndDate = compareDates(checkStartDate, checkEndDate)
+
   // Calendar date time dialog
   val startDateTimeState = rememberUseCaseState()
   val endDateTimeState = rememberUseCaseState()
@@ -78,6 +84,7 @@ fun CreatePage(createVM: CreateVM = viewModel()) {
   DateTimeDialog(
     state = startDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
+      checkStartDate = newDateTime
       calculateStartDate = newDateTime
       startDate = newDateTime.toString()
       displayStartDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
@@ -87,6 +94,7 @@ fun CreatePage(createVM: CreateVM = viewModel()) {
   DateTimeDialog(
     state = endDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
+      checkEndDate = newDateTime
       calculateEndDate = newDateTime
       endDate = newDateTime.toString()
       displayEndDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
@@ -277,7 +285,7 @@ fun CreatePage(createVM: CreateVM = viewModel()) {
         description = ""
         displayOption = ""
       },
-      enabled = allFieldsNotEmpty,
+      enabled = allFieldsNotEmpty && validStartEndDate,
       modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 96.dp, vertical = 24.dp)

@@ -12,9 +12,10 @@ interface CRUDops {
   suspend fun insertChron(chron: Chron)
   suspend fun updateChronPassword(email: String, password: String)
   suspend fun updateChronProfile(chronId: String, username: String, email: String, password: String)
-  suspend fun deleteChron(id: ObjectId)
 
   // For Epheron
   fun fetchEpheron(chronId: String): List<Epheron>
   suspend fun insertEpheron(epheron: Epheron)
+  suspend fun updateEpheron(epheronId: String, title: String, description: String, startDate: String, endDate: String, priority: String, isCompleted: Boolean)
+  suspend fun deleteEpheron(epheronId: String)
 }

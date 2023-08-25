@@ -10,4 +10,8 @@ object UserSession {
   // Optional session variables
   var sessionSelectedDate: String? = null
   var sessionFilterQuery: Boolean? = false
+
+  var sessionEditTask: String? = null
+  var sessionEditTaskTitle: String? = null
+  var sessionEditTaskDescription: String? = null
 }

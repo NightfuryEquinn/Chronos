@@ -117,11 +117,13 @@ fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = v
       if (listOfPending.isNotEmpty()) {
         listOfPending.forEach { epheron ->
           TimeTaskBlockComponent(
-            taskTitle = epheron.epheronTitle,
-            taskStart = epheron.epheronStart,
-            taskEnd = epheron.epheronEnd,
-            taskDuration = epheron.epheronDuration,
-            taskDescription = epheron.epheronDescription
+            epheron._epheron_id.toHexString(),
+            epheron.epheronTitle,
+            epheron.epheronStart,
+            epheron.epheronEnd,
+            epheron.epheronDuration,
+            epheron.epheronDescription,
+            navController
           )
         }
       } else {
@@ -144,7 +146,7 @@ fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = v
                 fontFamily = FontFamily(Font(R.font.corm))
               ),
               modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 12.dp)
             )
           }
         }
@@ -171,7 +173,7 @@ fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = v
 
       if (listOfComplete.isNotEmpty()) {
         listOfComplete.forEach { epheron ->
-          PriorityTaskBlockComponent(epheron.epheronTitle)
+          PriorityTaskBlockComponent(epheron._epheron_id.toHexString(), epheron.epheronTitle, epheron.epheronDescription, navController)
         }
       } else {
         Box(
@@ -193,7 +195,7 @@ fun TimeBasedPage(navController: NavHostController, timeBasedVM: TimeBasedVM = v
                 fontFamily = FontFamily(Font(R.font.corm))
               ),
               modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 12.dp)
             )
           }
         }

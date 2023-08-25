@@ -25,17 +25,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.chronos.R
+import com.example.chronos.realm.realmclass.UserSession
+import com.example.chronos.ui.navigations.ExtraRoutes
+import com.example.chronos.ui.viewmodels.TimeBasedVM
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun TimeTaskBlockComponent(
+  taskId: String,
   taskTitle: String,
   taskStart: String,
   taskEnd: String,
   taskDuration: String,
-  taskDescription: String
+  taskDescription: String,
+  navController: NavHostController
 ) {
   // Convert string to date
   val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
@@ -63,7 +70,7 @@ fun TimeTaskBlockComponent(
       ) {
         Column(
           modifier = Modifier
-            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .padding(horizontal = 16.dp, vertical = 4.dp)
         ) {
           Text(
             text = taskTitle,
@@ -104,7 +111,15 @@ fun TimeTaskBlockComponent(
         }
 
         IconButton(
-          onClick = { Log.d("Chron", "Edit Task") },
+          onClick = {
+            navController.navigate(ExtraRoutes.EditTask.route)
+
+            UserSession.sessionEditTask = taskId
+            UserSession.sessionEditTaskTitle = taskTitle
+            UserSession.sessionEditTaskDescription = taskDescription
+
+            Log.d("Chron", "Edit Task")
+          },
           modifier = Modifier
             .padding(end = 16.dp)
         ) {
@@ -122,7 +137,7 @@ fun TimeTaskBlockComponent(
           textAlign = TextAlign.Justify
         ),
         modifier = Modifier
-          .padding(horizontal = 12.dp, vertical = 8.dp)
+          .padding(horizontal = 16.dp, vertical = 8.dp)
       )
     }
   }
@@ -130,7 +145,10 @@ fun TimeTaskBlockComponent(
 
 @Composable
 fun PriorityTaskBlockComponent(
-  taskTitle: String
+  taskId: String,
+  taskTitle: String,
+  taskDescription: String,
+  navController: NavHostController
 ) {
   Box(
     modifier = Modifier
@@ -153,11 +171,19 @@ fun PriorityTaskBlockComponent(
           fontFamily = FontFamily(Font(R.font.oswald))
         ),
         modifier = Modifier
-          .padding(horizontal = 12.dp)
+          .padding(horizontal = 16.dp)
       )
 
       IconButton(
-        onClick = { Log.d("Chron", "Edit Task") },
+        onClick = {
+          navController.navigate(ExtraRoutes.EditTask.route)
+
+          UserSession.sessionEditTask = taskId
+          UserSession.sessionEditTaskTitle = taskTitle
+          UserSession.sessionEditTaskDescription = taskDescription
+
+          Log.d("Chron", "Edit Task")
+        },
         modifier = Modifier
           .padding(end = 16.dp)
       ) {

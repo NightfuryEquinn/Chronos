@@ -116,7 +116,7 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
 
       if (listOfHigh.isNotEmpty()) {
         listOfHigh.forEach { epheron ->
-          PriorityTaskBlockComponent(epheron.epheronTitle)
+          PriorityTaskBlockComponent(epheron._epheron_id.toHexString(), epheron.epheronTitle, epheron.epheronDescription, navController)
         }
       } else {
         Box(
@@ -138,7 +138,7 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
                 fontFamily = FontFamily(Font(R.font.corm))
               ),
               modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 12.dp)
             )
           }
         }
@@ -165,7 +165,7 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
 
       if (listOfMedium.isNotEmpty()) {
         listOfMedium.forEach { epheron ->
-          PriorityTaskBlockComponent(epheron.epheronTitle)
+          PriorityTaskBlockComponent(epheron._epheron_id.toHexString(), epheron.epheronTitle, epheron.epheronDescription, navController)
         }
       } else {
         Box(
@@ -187,7 +187,7 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
                 fontFamily = FontFamily(Font(R.font.corm))
               ),
               modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 12.dp)
             )
           }
         }
@@ -214,7 +214,7 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
 
       if (listOfLow.isNotEmpty()) {
         listOfLow.forEach { epheron ->
-          PriorityTaskBlockComponent(epheron.epheronTitle)
+          PriorityTaskBlockComponent(epheron._epheron_id.toHexString(), epheron.epheronTitle, epheron.epheronDescription, navController)
         }
       } else {
         Box(
@@ -229,14 +229,14 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
               .padding(vertical = 4.dp)
           ) {
             Text(
-              text = "No Completed Tasks",
+              text = "No Low Priority Tasks",
               style = TextStyle(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily(Font(R.font.corm))
               ),
               modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 12.dp)
             )
           }
         }
@@ -263,7 +263,7 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
 
       if (listOfComplete.isNotEmpty()) {
         listOfComplete.forEach { epheron ->
-          PriorityTaskBlockComponent(epheron.epheronTitle)
+          PriorityTaskBlockComponent(epheron._epheron_id.toHexString(), epheron.epheronTitle, epheron.epheronDescription, navController)
         }
       } else {
         Box(
@@ -285,7 +285,7 @@ fun PriorityBasedPage(navController: NavHostController, priorityBasedVM: Priorit
                 fontFamily = FontFamily(Font(R.font.corm))
               ),
               modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 12.dp)
             )
           }
         }
