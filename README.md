@@ -1,6 +1,7 @@
 # ⏳ Chronos
 ## ⚙️ Platform Used: Android Studio Giraffe, Oppo Reno 2F on Android 11 (API 30)
 ### 🎥 Demo Video
+https://github.com/NightfuryEquinn/Chronos/assets/86152710/61d8c18c-8a66-464d-9288-cb179f2faa33
 
 <hr/>
 
