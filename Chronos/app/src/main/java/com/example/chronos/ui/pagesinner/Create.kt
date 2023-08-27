@@ -76,8 +76,8 @@ fun CreatePage(createVM: CreateVM = viewModel()) {
   var displayStartDate by remember { mutableStateOf("") }
   var displayEndDate by remember { mutableStateOf ("") }
 
-  var calculateStartDate by remember { mutableStateOf<LocalDateTime?>(null) }
-  var calculateEndDate by remember { mutableStateOf<LocalDateTime?>(null) }
+  var calculateStartDate by remember { mutableStateOf(LocalDateTime.now()) }
+  var calculateEndDate by remember { mutableStateOf(LocalDateTime.now()) }
 
   DateTimeDialog(
     state = startDateTimeState,

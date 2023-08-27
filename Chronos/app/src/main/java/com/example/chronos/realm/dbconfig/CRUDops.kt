@@ -14,6 +14,6 @@ interface CRUDops {
   // For Epheron
   fun fetchEpheron(chronId: String): List<Epheron>
   suspend fun insertEpheron(epheron: Epheron)
-  suspend fun updateEpheron(epheronId: String, title: String, description: String, startDate: String, endDate: String, priority: String, isCompleted: Boolean)
+  suspend fun updateEpheron(epheronId: String, title: String, description: String, startDate: String, endDate: String, duration: String, priority: String, isCompleted: Boolean)
   suspend fun deleteEpheron(epheronId: String)
 }

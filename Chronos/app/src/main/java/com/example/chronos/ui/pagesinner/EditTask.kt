@@ -92,10 +92,14 @@ fun EditTaskPage(navController: NavHostController, editTaskVM: EditTaskVM = view
   var displayStartDate by remember { mutableStateOf("") }
   var displayEndDate by remember { mutableStateOf ("") }
 
+  var calculateStartDate by remember { mutableStateOf(LocalDateTime.now()) }
+  var calculateEndDate by remember { mutableStateOf(LocalDateTime.now()) }
+
   DateTimeDialog(
     state = startDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
       checkStartDate = newDateTime
+      calculateStartDate = newDateTime
       updateStartDate = newDateTime.toString()
       displayStartDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
     }
@@ -105,6 +109,7 @@ fun EditTaskPage(navController: NavHostController, editTaskVM: EditTaskVM = view
     state = endDateTimeState,
     selection = DateTimeSelection.DateTime { newDateTime ->
       checkEndDate = newDateTime
+      calculateEndDate = newDateTime
       updateEndDate = newDateTime.toString()
       displayEndDate = "${newDateTime.year}-${newDateTime.monthValue}-${newDateTime.dayOfMonth} ${newDateTime.hour}:${newDateTime.minute}"
     }
@@ -343,6 +348,7 @@ fun EditTaskPage(navController: NavHostController, editTaskVM: EditTaskVM = view
                 updateDescription,
                 updateStartDate,
                 updateEndDate,
+                updateDuration = editTaskVM.calculateDuration(calculateStartDate, calculateEndDate),
                 updatePriority,
                 updateIsCompleted
               )

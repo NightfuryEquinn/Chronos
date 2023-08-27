@@ -65,6 +65,7 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
     description: String,
     startDate: String,
     endDate: String,
+    duration: String,
     priority: String,
     isCompleted: Boolean
   ) {
@@ -75,6 +76,7 @@ class CRUDoverwrite(private val realm: Realm) : CRUDops {
       theEpheron?.epheronDescription = description
       theEpheron?.epheronStart = startDate
       theEpheron?.epheronEnd = endDate
+      theEpheron?.epheronDuration = duration
       theEpheron?.epheronPriority = priority
       theEpheron?.epheronIsComplete = isCompleted
     }
