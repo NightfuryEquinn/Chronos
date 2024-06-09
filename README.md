@@ -12,6 +12,7 @@ https://github.com/NightfuryEquinn/Chronos/assets/86152710/61d8c18c-8a66-464d-92
 4. JetBrains Kotlin Datetime
 5. Sheets Compose Dialogs
 6. Defaults
+7. Realm Local DB
 
 <hr/>
 
